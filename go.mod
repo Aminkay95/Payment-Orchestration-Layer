@@ -13,6 +13,5 @@ require (
 	github.com/lib/pq v1.12.3 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
-	gorm.io/driver/postgres v1.6.3 // indirect
-	gorm.io/gorm v1.31.2 // indirect
+	gorm.io/driver/postgres v0.2.4 // indirect
 )

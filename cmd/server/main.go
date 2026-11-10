@@ -32,6 +32,16 @@ func main() {
 
 	PORT := os.Getenv("PORT")
 
+	//Connection to database
+	db, err := config.NewConnectionDB()
+
+	if err != nil {
+		app.ErrorLog.Fatal(err)
+	}
+
+	//defer call to db.Close() so that connection is closed before main() exits
+	defer db.Close()
+
 	//Use our custom Logger to give logs
 	app.InfoLog.Printf("Starting server at port: %v", PORT)
 
