@@ -24,24 +24,6 @@ If a checkout depends on a single gateway, an outage means lost sales. Money-Flo
 - **AWS** — ECS, SQS + DLQs, EventBridge, Secrets Manager, KMS
 - **Targets:** 100+ req/sec sustained, 180k txns/day, < 500ms payment initiation (P95)
 
-## Quick Start
-
-Requires Go and a `.env` file with `PORT`.
-
-```bash
-go run ./cmd/server
-# → "Backend is running" on http://localhost:$PORT
-```
-
-## Project Layout
-
-```
-cmd/server/       — entrypoint
-internal/         — config, transactions, handlers
-migrations/       — DB migrations (planned)
-docs/             — full specs
-deployments/      — infra (planned)
-```
 
 ## Key Docs
 
