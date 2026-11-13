@@ -11,6 +11,18 @@ import (
 
 func main() {
 
+	//Load port from .env
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Fatalf("Error loading .env files")
+	}
+
+	PORT := os.Getenv("SERVER_PORT")
+
+	//Connection to database
+	db, err := config.NewConnectionDB()
+
 	//intialize app
 	app := &config.Application{
 		InfoLog:  log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime),
@@ -22,18 +34,6 @@ func main() {
 
 	//Mux to handle our routes
 	mux.HandleFunc("/", app.HelloWeb)
-
-	//Load port from .env
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatalf("Error loading .env files")
-	}
-
-	PORT := os.Getenv("PORT")
-
-	//Connection to database
-	db, err := config.NewConnectionDB()
 
 	if err != nil {
 		app.ErrorLog.Fatal(err)
@@ -47,7 +47,7 @@ func main() {
 
 	//Spin up server
 
-	error := http.ListenAndServe(PORT, mux)
+	error := http.ListenAndServe(":"+PORT, mux)
 
 	//Custom Logs error
 	app.ErrorLog.Fatal(error)

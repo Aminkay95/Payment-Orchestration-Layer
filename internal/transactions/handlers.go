@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+type currentTransaction transaction
+
 func createTransaction(w http.ResponseWriter, r *http.Request) {
 
 	//check method is post to ensure idempotency
@@ -18,6 +20,19 @@ func createTransaction(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+
+	//Fake data
+	currentTransaction{
+
+		merchantId:      1,
+		merchantOrderId: 1,
+		amountcents:     100,
+		gatewayId:       1,
+		cardTokenId:     2,
+		state:           "Created",
+	}
+
+	transactionId, err := currentTransaction.Create()
 
 	//continue creating transaction
 	fmt.Println(("transaction Created"))

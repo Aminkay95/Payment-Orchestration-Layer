@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:18.7-alpine
+    container_name: postgres_db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_DB_HOST=${DB_HOST}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_SSL_MODE=${SSL_MODE}
+      - POSTGRES_DB_PORT=${DB_PORT}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+    
+    restart: on-failure:3
+  
+  redis:
+    image: redis:8.8-alpine
+    container_name: redis_db
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+  
+  app:
+    depends_on:
+      - postgres
+      - redis
+    build: 
+      context: .
+      dockerfile: deployments/docker/Dockerfile
+    container_name: moneyflow_api
+    ports:
+      - "5000:80"
+
+
+volumes:
+  postgres_data:
+  redis:
