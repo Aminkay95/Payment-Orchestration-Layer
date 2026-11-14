@@ -5,19 +5,19 @@ import (
 	"time"
 )
 
-// Type to hold an individual transaction
-type transaction struct {
-	id               int
-	merchantId       int
-	merchantOrderId  int
-	ammountCents     int
-	gatewayId        int
-	gatewayAccountId int
-	cardTokenId      int
-	state            string
-	stateUpdatedAt   time.Time
-	createdAt        time.Time
-	isDeleted        bool
+// Type to hold an individual transaction in Go memory
+type Transaction struct {
+	Id               int       `json:"id"`
+	MerchantId       int       `json:"merchantId"`
+	MerchantOrderId  int       `json:"merchantOrderId"`
+	AmountCents      int       `json:"amountCents"`
+	GatewayId        int       `json:"gatewayId"`
+	GatewayAccountId int       `json:"gatewayAccountId"`
+	CardTokenId      int       `json:"cardTokenId"`
+	State            string    `json:"state"`
+	StateUpdatedAt   time.Time `json:"stateUpdatedAt"`
+	CreatedAt        time.Time `json:"createdAt"`
+	IsDeleted        bool      `json:"isDeleted"`
 }
 
 type TransactionModel struct {
@@ -25,7 +25,7 @@ type TransactionModel struct {
 }
 
 // Create Transaction
-func (m *TransactionModel) Create(merchantId, merchantOrderId, ammountCents, gatewayId, gatewayAccountId, cardTokenId int, state string) (int, error) {
+func (m *TransactionModel) Create(t *Transaction) (int, error) {
 
 	stmt := `INSERT INTO 
 				transactions(merchantId, merchantOrderId, amountcents, gatewayId, gatewayAccountId, cardTokenId, state, stateUpdatedAt, createdAt, isDeleted)
@@ -40,8 +40,5 @@ func (m *TransactionModel) Create(merchantId, merchantOrderId, ammountCents, gat
 		return 0, err
 	}
 
-	return transactionId, nil
+	return transactionId, err
 }
-
-// Get Transaction by id
-func (m *TransactionModel) GetTransactionById(id int)

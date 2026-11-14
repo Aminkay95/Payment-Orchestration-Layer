@@ -6,18 +6,16 @@ import (
 	"os"
 
 	_ "github.com/lib/pq"
-
-	"github.com/joho/godotenv"
 )
 
 func NewConnectionDB() (*sql.DB, error) {
 
 	//Load .env Varibles
-	err := godotenv.Load()
+	// err := godotenv.Load()
 
-	if err != nil {
-		fmt.Println("Error loading .env files")
-	}
+	// if err != nil {
+	// 	fmt.Println("Error loading .env files")
+	// }
 
 	DB_NAME := os.Getenv("DB_NAME")
 	HOST := os.Getenv("HOST")

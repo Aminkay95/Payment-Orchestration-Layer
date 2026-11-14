@@ -6,17 +6,17 @@ import (
 	"os"
 
 	"github.com/Aminkay95/Payment-Orchestration-Layer/internal/config"
-	"github.com/joho/godotenv"
+	"github.com/Aminkay95/Payment-Orchestration-Layer/internal/transactions"
 )
 
 func main() {
 
 	//Load port from .env
-	err := godotenv.Load()
+	// err := godotenv.Load()
 
-	if err != nil {
-		log.Fatalf("Error loading .env files")
-	}
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env files %v", err)
+	// }
 
 	PORT := os.Getenv("SERVER_PORT")
 
@@ -34,6 +34,7 @@ func main() {
 
 	//Mux to handle our routes
 	mux.HandleFunc("/", app.HelloWeb)
+	mux.HandleFunc("/transactions", transactions.CreateTransaction)
 
 	if err != nil {
 		app.ErrorLog.Fatal(err)
