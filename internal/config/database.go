@@ -18,7 +18,7 @@ func NewConnectionDB() (*sql.DB, error) {
 	// }
 
 	DB_NAME := os.Getenv("DB_NAME")
-	HOST := os.Getenv("HOST")
+	DB_HOST := os.Getenv("DB_HOST")
 	DB_USER := os.Getenv("DB_USER")
 	DB_PASSWORD := os.Getenv("DB_PASSWORD")
 	SSL_MODE := os.Getenv("SSL_MODE")
@@ -26,7 +26,7 @@ func NewConnectionDB() (*sql.DB, error) {
 
 	//establishing our database connection
 
-	dsn := fmt.Sprintf(`postgres://%s:%s@%s:%s/%s?sslmode=%s`, DB_USER, DB_PASSWORD, HOST, DB_PORT, DB_NAME, SSL_MODE)
+	dsn := fmt.Sprintf(`postgres://%s:%s@%s:%s/%s?sslmode=%s`, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME, SSL_MODE)
 
 	//Open db connection
 	db, err := sql.Open("postgres", dsn)

@@ -29,16 +29,16 @@ func main() {
 		ErrorLog: log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime),
 	}
 
+	if err != nil {
+		app.ErrorLog.Fatal(err)
+	}
+
 	//initialize new Mux
 	mux := http.NewServeMux()
 
 	//Mux to handle our routes
 	mux.HandleFunc("/", app.HelloWeb)
 	mux.HandleFunc("/transactions", transactions.CreateTransaction)
-
-	if err != nil {
-		app.ErrorLog.Fatal(err)
-	}
 
 	//defer call to db.Close() so that connection is closed before main() exits
 	defer db.Close()
