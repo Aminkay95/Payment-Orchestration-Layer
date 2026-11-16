@@ -1,6 +1,7 @@
-package config
+package app
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 )
@@ -19,5 +20,11 @@ func (Application) HelloWeb(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte("Backend is running"))
+	w.Header().Set("Content-Type", "application/json")
+
+	msg := map[string]any{
+		"msg": "Backend is running",
+	}
+
+	json.NewEncoder(w).Encode(msg)
 }

@@ -5,18 +5,18 @@ import (
 	"net/http"
 )
 
-func CreateTransaction(w http.ResponseWriter, r *http.Request) {
+func handleCreateTransaction(w http.ResponseWriter, r *http.Request) {
 
-	//check method is post to ensure idempotency
-	if r.Method != http.MethodPost {
+	// //check method is post to ensure idempotency
+	// if r.Method != http.MethodPost {
 
-		//Letting the user know which method is allowed
-		w.Header().Set("Allow", http.MethodPost)
+	// 	//Letting the user know which method is allowed
+	// 	w.Header().Set("Allow", http.MethodPost)
 
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
-		return
+	// 	http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+	// 	return
 
-	}
+	// }
 
 	//Fake data
 	currentTransaction := &Transaction{

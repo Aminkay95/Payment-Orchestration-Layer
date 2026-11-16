@@ -5,26 +5,19 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/Aminkay95/Payment-Orchestration-Layer/internal/config"
-	"github.com/Aminkay95/Payment-Orchestration-Layer/internal/transactions"
+	"github.com/Aminkay95/Payment-Orchestration-Layer/internal/app"
+	"github.com/Aminkay95/Payment-Orchestration-Layer/internal/database"
 )
 
 func main() {
 
-	//Load port from .env
-	// err := godotenv.Load()
-
-	// if err != nil {
-	// 	log.Fatalf("Error loading .env files %v", err)
-	// }
-
 	PORT := os.Getenv("SERVER_PORT")
 
 	//Connection to database
-	db, err := config.NewConnectionDB()
+	db, err := database.NewConnectionDB()
 
 	//intialize app
-	app := &config.Application{
+	app := &app.Application{
 		InfoLog:  log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime),
 		ErrorLog: log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime),
 	}
@@ -32,13 +25,6 @@ func main() {
 	if err != nil {
 		app.ErrorLog.Fatal(err)
 	}
-
-	//initialize new Mux
-	mux := http.NewServeMux()
-
-	//Mux to handle our routes
-	mux.HandleFunc("/", app.HelloWeb)
-	mux.HandleFunc("/transactions", transactions.CreateTransaction)
 
 	//defer call to db.Close() so that connection is closed before main() exits
 	defer db.Close()
@@ -48,7 +34,7 @@ func main() {
 
 	//Spin up server
 
-	error := http.ListenAndServe(":"+PORT, mux)
+	error := http.ListenAndServe(":"+PORT, app.Routes())
 
 	//Custom Logs error
 	app.ErrorLog.Fatal(error)
